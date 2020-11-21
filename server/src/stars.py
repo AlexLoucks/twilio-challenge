@@ -1,16 +1,15 @@
-from flask import request, Blueprint, current_app
-from marshmallow import ValidationError
-from loguru import logger 
-from .schemas import StarCountRequestSchema
-from .utils import construct_response
 import json
 import requests
 import sys
 import traceback
+from flask import request, Blueprint, current_app
+from marshmallow import ValidationError
+from loguru import logger 
+from .schemas import StarCountRequestSchema
+from .utils import construct_response, validate_http_response
+
 
 blueprint = Blueprint('stars', __name__, url_prefix='/stars') 
-
-
 
 @blueprint.route('/count', methods=['POST'])
 @construct_response
@@ -32,7 +31,7 @@ def count():
                 content:
                     application/json:
                         starsCount: A map containing the number of stars for each repo.
-                        totaalStars: An integer representing the sum of stars on all repos.
+                        totalStars: An integer representing the sum of stars on all repos.
             400:
                 description: invalid input provided to the api endpoint
             500: 
@@ -42,9 +41,26 @@ def count():
     payload = request.get_json()
     logger.info(f'The stars/count endpoint has been called with the following payload: {payload}')
     request_input = StarCountRequestSchema().load(payload)
-    print(f'PAYLOAD: {payload}')
     return count_stars_github(payload)
 
+
+def count_stars_github(payload):
+    star_count_map = {}
+    response = {}
+    sum = 0
+    for repo in payload.get('repositoryList'):
+        number_stars = invoke_github_api_for_repo(repo)
+        star_count_map[repo] = number_stars
+        sum += number_stars
+    response['starsCount'] = star_count_map
+    response['totalStars'] = sum
+    return response, 200
+
+
+def invoke_github_api_for_repo(repo):
+    github_url = f"{current_app.config['GITHUB_URL']}/repos/{repo}"
+    repo_data = requests.get(url=github_url)
+    return validate_http_response(repo_data).get('stargazers_count')
 
 
 @blueprint.errorhandler(Exception)
@@ -54,6 +70,10 @@ def handle_api_errors(exception):
         exception.error_type = "Input Error"
         exception.description = exception.messages
         exception.code = 400
+    if isinstance(exception, RuntimeError):
+        exception.error_type = "Internal Server Error"
+        exception.description = f'{exception}'
+        exception.code = 500
     elif not getattr(exception, 'code', None):
         exception.error_type = "Internal Server Error"
         exception.description = ''
@@ -70,12 +90,6 @@ def handle_api_errors(exception):
     logger.error(f'{error_type}: {exception.description} with code: {exception.code}')
     return {error_type: exception.description}, exception.code
 
-   
 
-def count_stars_github():
-    return {}
 
-def invoke_github_api_endpoint_for_repo(repo_name);
-    github_url = f'{current_app.config.github_url}/repos/{repo_name}
-    repo_data = requests.get(url=github_url)
-    return validate_response(repo_data)
+

@@ -18,7 +18,7 @@ class StarCountRequestSchema(Schema):
         if len(data) < 1:
             raise ValidationError('Repository list must have at least one item')
         
-        repo_pattern = '^[a-zA-Z0-9]+/[a-zA-Z0-9]+$'
+        repo_pattern = '^[a-zA-Z0-9-]+/[a-zA-Z0-9-]+$'
         for repo in data:
             if not re.search(repo_pattern, repo):
                 raise ValidationError(f'The repo named {repo} does not match the expected pattern ogranziation/repository')
