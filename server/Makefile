@@ -13,7 +13,7 @@ help: ## This help.
 build: ## Build the container
 	docker build -t $(APP_NAME) -f Dockerfile .
 
-run: ## Run container on port 5000
+run: ## Run container on port configured in `config.env`
 	docker run -it --rm \
 	-p=127.0.0.1:$(FLASK_PORT):$(FLASK_PORT) \
 	-e FLASK_HOST=$(FLASK_HOST) \
