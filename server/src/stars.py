@@ -45,6 +45,19 @@ def count():
 
 
 def count_stars_github(payload):
+    """
+    Method responsible for building the result of the http call to the given route.
+    
+    Parameters:
+    -----------
+    payload: dict
+        The payload received as part of the http call to the /stars/count endpoint
+
+    Returns:
+    -------
+    response: dict
+        Dictionary storing the starsCount map and the number of total stars
+    """
     star_count_map = {}
     response = {}
     sum = 0
@@ -58,14 +71,43 @@ def count_stars_github(payload):
 
 
 def invoke_github_api_for_repo(repo):
+    """
+    Helper method responsible for calling the github API for each repo
+    
+    Parameters:
+    -----------
+    repo: str
+        The name of the string to look up using the github API
+
+    Returns:
+    -------
+    count: int
+        Dictionary storing the starsCount map and the number of total stars
+    """
     github_url = f"{current_app.config['GITHUB_URL']}/repos/{repo}"
     repo_data = requests.get(url=github_url)
-    return validate_http_response(repo_data).get('stargazers_count')
+    count = validate_http_response(repo_data).get('stargazers_count')
+    return count 
 
 
 @blueprint.errorhandler(Exception)
 @construct_response
 def handle_api_errors(exception):
+    """
+    Helper method responsible for handling any error during the execution
+    
+    Parameters:
+    -----------
+    exception: Exception
+        The exception encountered
+
+    Returns:
+    -------
+    map: 
+        Dictionary scontaining the error_type and description
+    exception code:
+        int representing the exception code
+    """
     if isinstance(exception, ValidationError):
         exception.error_type = "Input Error"
         exception.description = exception.messages

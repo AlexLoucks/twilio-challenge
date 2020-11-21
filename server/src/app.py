@@ -10,7 +10,20 @@ from .config import (
 )
 
 def create_app():
-    # set the config corresponding to the current environment
+    """
+    Creates a Flask app with the configuration defined based on the current environment.
+
+    Returns
+    -------
+    app: 
+        A new Flask application configured accoridng to environment
+
+    Raises:
+    -------
+    ValueError:
+        Raised when an incorrect environment name is set as an env variable
+    """
+    # choose the config based on the current environment
     env = os.getenv('FLASK_ENV', 'dev').lower()
     if env == 'dev':
         config = DevelopmentConfig
@@ -21,7 +34,7 @@ def create_app():
     else:
         raise ValueError(f'Invalid FLASK_ENV {env}; must be dev/qa/prod')
 
-
+    # create new Flask app
     app = Flask(__name__)
     app.config.from_object(config)
     app.register_blueprint(stars.blueprint)

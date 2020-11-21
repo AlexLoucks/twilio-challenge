@@ -4,6 +4,9 @@ from functools import wraps
 from loguru import logger 
 
 def construct_response(invoke_endpoint):
+    """
+    Helper method constucting the response for the http call
+    """
     @wraps(invoke_endpoint)
     def wrapper (*args, **kwargs):
         response, status_code = invoke_endpoint(*args, **kwargs)
@@ -12,6 +15,9 @@ def construct_response(invoke_endpoint):
 
 
 def validate_http_response(response):
+    """
+    Helper method validating the github API call response 
+    """
     try:
         response.raise_for_status()
         return response.json()
