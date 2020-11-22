@@ -84,9 +84,10 @@ def invoke_github_api_for_repo(repo):
     count: int
         Dictionary storing the starsCount map and the number of total stars
     """
+    # Don't need to sanitize input, all GH APIs use /repos/:owner:/:repo: slug
     github_url = f"{current_app.config['GITHUB_URL']}/repos/{repo}"
     repo_data = requests.get(url=github_url)
-    count = validate_http_response(repo_data).get('stargazers_count')
+    count = validate_http_response(repo_data, repo).get('stargazers_count')
     return count 
 
 
@@ -116,6 +117,7 @@ def handle_api_errors(exception):
         exception.error_type = "Internal Server Error"
         exception.description = f'{exception}'
         exception.code = 500
+    # test if response code is None, make generic error
     elif not getattr(exception, 'code', None):
         exception.error_type = "Internal Server Error"
         exception.description = ''
@@ -126,6 +128,7 @@ def handle_api_errors(exception):
     traceback.print_tb(tb) 
     error_type = getattr(exception, 'error_type', None) or exception.__class__.__name__
 
+    # test if description is None, add empty string if so
     if not getattr(exception, 'description', None):
         exception.description = ''
 

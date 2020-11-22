@@ -14,7 +14,7 @@ def construct_response(invoke_endpoint):
     return wrapper
 
 
-def validate_http_response(response):
+def validate_http_response(response, repo):
     """
     Helper method validating the github API call response 
     """
@@ -26,7 +26,7 @@ def validate_http_response(response):
             res_body = response.json()
         except ValueError:
             res_body = response.text
-        
-    error_msg = f'Error calling the github API, status: {response.status_code}, body: {res_body}'
+    # Pass along meaningful errors from github api
+    error_msg = f'Error calling the github API for repo: {repo}, status: {response.status_code}, body: {res_body}'
     logger.error(error_msg)
     raise RuntimeError(error_msg)
