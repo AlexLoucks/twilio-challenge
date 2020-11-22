@@ -22,7 +22,7 @@ cd twilio-challenge/client
 Example:
 ```./pyinstaller_start AlexLoucks/test-repo-1 AlexLoucks/test-repo-2```
 
-**Note:** currently, the Python library allows the user to specify its own host:port. The same functionalit can be estended to the executable, by generating a new one in which the port and host are passed first from commandline. 
+**Note:** currently, the Python library allows the user to specify its own host:port. The same functionality can be extended to the executable, by generating a new one in which the port and host are passed first from commandline. 
 
 ### TESTING:
 1. Run the commands in the Jupyter Notebook attached (Python_stars_library_testing.ipynb) for using the client in a Python app
