@@ -27,6 +27,6 @@ def validate_http_response(response, repo):
         except ValueError:
             res_body = response.text
     # Pass along meaningful errors from github api
-    error_msg = f'Error calling the github API for repo: {repo}, status: {response.status_code}, body: {res_body}'
+    error_msg = f'Error calling the github API for repo: {repo}, Github call status: {response.status_code}, body: {res_body}'
     logger.error(error_msg)
     raise RuntimeError(error_msg)

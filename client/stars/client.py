@@ -1,9 +1,14 @@
 
+import requests
 from .config import (
     DevelopmentConfig,
     QAConfig,
     ProductionConfig  
 )
+class Borg:
+    __shared_state = {}
+    def __init__(self):
+        self.__dict__ = self.__shared_state
 
 class Client(Borg):
     """
@@ -37,16 +42,16 @@ class Client(Borg):
 
         if env == 'dev':
             config = DevelopmentConfig
-        elif env == 'qa'
+        elif env == 'qa':
             config = QAConfig
-        elif env == 'prod'
+        elif env == 'prod':
             config == ProductionConfig
         else:
             raise ValueError(f'Invalid FLASK_ENV {env}; must be dev/qa/prod')
 
         _host = host or config.FLASK_HOST
         _port = port or config.FLASK_PORT
-        self.url = f'{_host}:{_port}'
+        self.url = f'http://{_host}:{_port}'
     
         # If we wanted to extend this to include authentication, http_client would use the the requests-oauthlib OAuth2Session library
         self.http_client = requests
