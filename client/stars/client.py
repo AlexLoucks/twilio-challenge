@@ -5,12 +5,7 @@ from .config import (
     QAConfig,
     ProductionConfig  
 )
-class Borg:
-    __shared_state = {}
-    def __init__(self):
-        self.__dict__ = self.__shared_state
-
-class Client(Borg):
+class Client():
     """
     Represents a shared state class specific to each client (using the Borg design pattern) to
     which all other classes can have access by declaring an instance of it. It is further customized based on the env.
@@ -37,7 +32,6 @@ class Client(Borg):
     """
 
     def __init__ (self, host=None, port=None, env=None):
-        Borg.__init__(self)
         env = env or 'dev'
 
         if env == 'dev':
