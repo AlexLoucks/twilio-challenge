@@ -37,6 +37,6 @@ def test_app_prod():
 def test_app_invalid_env():
     with pytest.raises(ValueError) as e:
         my_app = create_app()
-    assert 'Invalid FLASK_ENV test; must be dev/qa/prod' in str(e.value)
+    assert 'Invalid FLASK_ENV fail; must be dev/qa/prod' in str(e.value)
 
   

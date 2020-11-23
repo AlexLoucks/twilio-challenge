@@ -39,7 +39,7 @@ class Client():
         elif env == 'qa':
             config = QAConfig
         elif env == 'prod':
-            config == ProductionConfig
+            config = ProductionConfig
         else:
             raise ValueError(f'Invalid FLASK_ENV {env}; must be dev/qa/prod')
 
