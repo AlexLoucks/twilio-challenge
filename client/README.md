@@ -9,6 +9,7 @@ There are two ways to run this client.
 install the package as a library, and import it in your code. 
 ```
 cd twilio-challenge/client
+pip install -r requirements.txt
 pip install -e .
 ```
 Then, it can be used as seen in the demo file attached: Python_stars_library_testing.ipynb
