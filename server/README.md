@@ -1,7 +1,7 @@
 # Github Repo Stars API Server
 
 ### Running instructions:
-* It is assumed that the machine running this has docker and make installed. If not, follow the instalation instructions [here], and run `brew install make` to install make in order to make use of the Makefile. <br/>
+* It is assumed that the machine running this has docker and make installed. If not, follow the instalation instructions [here](https://docs.docker.com/get-docker/), and run `brew install make` to install make in order to make use of the Makefile. <br/>
 
 1. Clone this repo:
     ```git clone https://github.com/AlexLoucks/twilio-challenge.git```
