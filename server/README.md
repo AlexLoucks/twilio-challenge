@@ -7,7 +7,9 @@
     ```git clone https://github.com/AlexLoucks/twilio-challenge.git```
 
 2. Navigate to the server subfolder:
-cd twilio-challenge/server
+    ```
+    cd twilio-challenge/server
+    ```
 
 3. See build and run options:
 make help
