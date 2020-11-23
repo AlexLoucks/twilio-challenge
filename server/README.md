@@ -12,7 +12,9 @@
     ```
 
 3. See build and run options:
-make help
+    ```
+    make help
+    ```
 4. **Simple build/run:**
     ```
     make build
