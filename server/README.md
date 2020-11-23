@@ -1,10 +1,10 @@
 # Github Repo Stars API Server
 
 ### Running instructions:
-* It is assumed that the machine running this has docker and make installed. If not follow instalation instructions [here], and run `brew install make` to install make in order to make use of the Makefile. <br/>
+* It is assumed that the machine running this has docker and make installed. If not, follow the instalation instructions [here], and run `brew install make` to install make in order to make use of the Makefile. <br/>
 
 1. Clone this repo:
-git clone https://github.com/AlexLoucks/twilio-challenge.git
+    ```git clone https://github.com/AlexLoucks/twilio-challenge.git```
 
 2. Navigate to the server subfolder:
 cd twilio-challenge/server
@@ -12,8 +12,10 @@ cd twilio-challenge/server
 3. See build and run options:
 make help
 4. **Simple build/run:**
-make build
-make run
+    ```
+    make build
+    make run
+    ```
 The following response signifies that your server is up and running:
 * Serving Flask app "src.app" (lazy loading)
 * Environment: dev
@@ -28,6 +30,9 @@ Bring a container up as described above.
 Start firing requests at it. For the purpose of this excercise, I have created a few empty testing repos. Feel free to use them in your tests, or test them on different ones. However, it has been assumed that this API is intended for use on public repos, so it doesn't include authentication options. 
 
 * **Tesing happy-path scenario:**
+    ```
+    curl -X POST 0.0.0.0:5000/stars/count -H "Accept: application.json" -H "Content-Type: application/json" -d '{"repositoryList":["AlexLoucks/test-repo-1", "AlexLoucks/test-repo-2"]}'
+    ```
 
     Expected result:
     ```json
@@ -41,7 +46,10 @@ Start firing requests at it. For the purpose of this excercise, I have created a
  
 
 * **Tesing invalid input - missing repo List:**
-	
+	```
+    curl -X POST 0.0.0.0:5000/stars/count -H "Accept: application.json" -H "Content-Type: application/json" -d '{}'
+    ```
+
 	Expected result:
 	```json
 	{
@@ -53,6 +61,9 @@ Start firing requests at it. For the purpose of this excercise, I have created a
 	}
 
 * **Tesing invalid input - empty repo List:**
+    ```
+    curl -X POST 0.0.0.0:5000/stars/count -H "Accept: application.json" -H "Content-Type: application/json" -d '{"repositoryList":[]}'
+    ```
 	
 	Expected result:
 	```json
@@ -65,6 +76,9 @@ Start firing requests at it. For the purpose of this excercise, I have created a
 	}
 
 * **Tesing invalid input - malformed repo name in repo List:**
+    ```
+    curl -X POST 0.0.0.0:5000/stars/count -H "Accept: application.json" -H "Content-Type: application/json" -d '{"repositoryList":["AlexLoucks/", "AlexLoucks/test-repo-2"]}'
+    ```
 	
 	Expected result:
 	```json
@@ -76,7 +90,10 @@ Start firing requests at it. For the purpose of this excercise, I have created a
 	}
 	}
 
-* **Tesing invalid input - nun-existent repo name in repo List:**
+* **Tesing invalid input - non-existent repo name in repo List:**
+    ```
+    curl -X POST 0.0.0.0:5000/stars/count -H "Accept: application.json" -H "Content-Type: application/json" -d '{"repositoryList":["AlexLoucks/test-repo-1", "AlexLoucks/test-repo-7"]}'
+    ```
 	
 	Expected result:
 	```json

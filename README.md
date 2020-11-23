@@ -1,6 +1,6 @@
 # Twilio challenge write-up
 
-Overview: This server/client has been created with the assumption that this is only an initial step in creating  a much comprehensive product, and it's thus structured to allow for easy addition of new functionality. 
+Overview: This server/client has been created with the assumption that this is only an initial step in creating  a much more comprehensive product, and it's thus structured to allow for easy addition of new functionality. 
 ### Github Repo Stars API Server Requirements
 
 | Server Requirements | Implementation Description            | Expected result of actions |
@@ -16,8 +16,8 @@ Overview: This server/client has been created with the assumption that this is o
 |---------------------|---------------------------------------|
 |Runnable             | Two different way of running the client have been provided: <br /> 1. For Python users, the client can be installed as a Python library and included in their Python application (see Jupyter Notebook as a demo). <br />2. As an executable file, from terminal.  |
 |README| A detailed README.md file has been added to the client subfolder explaining how to use it. |
-|Input Validation| The client is a light-weight package which performs minimal input validation - testing for not null input. For the purpose of this excercise, the API server does the heavy-lifting in terms of validating the input, and the client just forwards the result from the API to the user. This decision has been made keeping our clients in mind, which can decide to use our API by either calling it directly, or via our client. Both user-types should benefit from the same rigourous input validation. |
-|Calls Server| Self-explanatory - the client makes http calls to the server. (The server location/port can be set in the config file, or passed to the client at initialization time. default: ```0.0.0.0/5000```)|
+|Input Validation| The client is a light-weight package which performs minimal input validation, specifically testing for not null input. For the purpose of this excercise, the API server does the heavy-lifting in terms of validating the input, and the client just forwards the result from the API to the user. This decision has been made keeping our clients in mind, which can decide to use our API by either calling it directly, or via our client. Both user-types should benefit from the same rigourous input validation. |
+|Calls Server| The client makes http calls to the server. (The server location/port can be set in the config file, or passed to the client at initialization time. default: ```0.0.0.0/5000```)|
 |Error Handling| The client validates the server's response and forwards the error to the user for appropriate action.|
 |Tests| See README.md for detailed testing instructions |
 
